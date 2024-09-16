@@ -7,7 +7,8 @@ const router = express.Router();
 
 router.post('/login', VendorLogin);
 
-router.get('/profile', Authenticate , GetVendorProfile);
+router.use(Authenticate);
+router.get('/profile', GetVendorProfile);
 router.patch('/profile', UpdateVendorProfile);
 router.patch('/service', UpdateVendorService);
 
