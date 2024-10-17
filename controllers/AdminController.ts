@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from "express";
-import { CreateVendorInput } from "../dto";
-import { Vendor } from "../models";
-import { GeneratePassword, GenerateSalt } from "../utility";
+import { NextFunction, Request, Response } from 'express';
+import { CreateVendorInput } from '../dto';
+import { Vendor } from '../models';
+import { GeneratePassword, GenerateSalt } from '../utility';
 
 export const FindVendor = async (id: string | undefined, email?: string) => {
   if (email) {
@@ -28,7 +28,7 @@ export const CreateVendor = async (
     phone,
   } = <CreateVendorInput>req.body;
 
-  const existingVendor = await FindVendor("", email);
+  const existingVendor = await FindVendor('', email);
 
   // const existingVendor = await Vendor.findOne({
   //   $or: [{ email: email }, { phone: phone }],
@@ -37,7 +37,7 @@ export const CreateVendor = async (
   if (existingVendor !== null) {
     return res.status(400).json({
       message:
-        "A vendor is already created with this Email ID or Phone Number!",
+        'A vendor is already created with this Email ID or Phone Number!',
     });
   }
 
@@ -60,7 +60,7 @@ export const CreateVendor = async (
     rating: 0,
     serviceAvailable: false,
     coverImage: [],
-    foods: []
+    foods: [],
   });
 
   return res.json(createVendor);
@@ -79,11 +79,13 @@ export const GetVendors = async (
     if (vendors && vendors.length > 0) {
       return res.json(vendors);
     } else {
-      return res.status(404).json({ message: "Vendors data not available" });
+      return res.status(404).json({ message: 'Vendors data not available' });
     }
   } catch (error: any) {
     // Handle any errors that might occur during the database query
-    return res.status(500).json({ message: "An error occurred", error: error.message });
+    return res
+      .status(500)
+      .json({ message: 'An error occurred', error: error.message });
   }
 };
 
@@ -102,10 +104,12 @@ export const GetVendorByID = async (
     if (vendor) {
       return res.json(vendor);
     } else {
-      return res.status(404).json({ message: "Vendor data not available" });
+      return res.status(404).json({ message: 'Vendor data not available' });
     }
-  } catch (error:any) {
+  } catch (error: any) {
     // If there's an error in FindVendor or elsewhere, handle it here
-    return res.status(500).json({ message: "An error occurred", error: error.message });
+    return res
+      .status(500)
+      .json({ message: 'An error occurred', error: error.message });
   }
 };

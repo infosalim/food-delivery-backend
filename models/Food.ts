@@ -1,4 +1,4 @@
-import mongoose, { Document, Model, Schema } from "mongoose";
+import mongoose, { Document, Model, Schema } from 'mongoose';
 
 interface FoodDoc extends Document {
   vendorId: string;
@@ -14,7 +14,11 @@ interface FoodDoc extends Document {
 
 const FoodSchema = new Schema(
   {
-    vendorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor', required: true },
+    vendorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Vendor',
+      required: true,
+    },
     name: { type: String, required: true },
     description: { type: String, required: true },
     category: { type: String },

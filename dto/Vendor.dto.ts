@@ -9,7 +9,7 @@ export interface CreateVendorInput {
   password: string;
 }
 
-export interface EditVendorInputs{
+export interface EditVendorInputs {
   name: string;
   address: string;
   phone: string;

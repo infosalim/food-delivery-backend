@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from "express";
-import { CreateFoodInputs, EditVendorInputs, VendorLoginInputs } from "../dto";
-import { FindVendor } from "./AdminController";
-import { GenerateSignature, ValidatePassword } from "../utility";
-import { Food, Vendor } from "../models";
-import mongoose from "mongoose";
+import { NextFunction, Request, Response } from 'express';
+import { CreateFoodInputs, EditVendorInputs, VendorLoginInputs } from '../dto';
+import { FindVendor } from './AdminController';
+import { GenerateSignature, ValidatePassword } from '../utility';
+import { Food, Vendor } from '../models';
+import mongoose from 'mongoose';
 
 export const VendorLogin = async (
   req: Request,
@@ -12,7 +12,7 @@ export const VendorLogin = async (
 ) => {
   const { email, password } = <VendorLoginInputs>req.body;
 
-  const existingVendor = await FindVendor("", email);
+  const existingVendor = await FindVendor('', email);
 
   if (existingVendor !== null) {
     const validation = await ValidatePassword(
@@ -30,10 +30,10 @@ export const VendorLogin = async (
       });
       return res.json(signature);
     } else {
-      return res.json({ message: "Password is not valid" });
+      return res.json({ message: 'Password is not valid' });
     }
   }
-  return res.json({ message: "Login credential is not valid" });
+  return res.json({ message: 'Login credential is not valid' });
 };
 
 export const GetVendorProfile = async (
@@ -48,7 +48,7 @@ export const GetVendorProfile = async (
     return res.json(existingVendor);
   }
 
-  return res.json({ message: "Vendor information not found" });
+  return res.json({ message: 'Vendor information not found' });
 };
 
 export const UpdateVendorProfile = async (
@@ -73,7 +73,7 @@ export const UpdateVendorProfile = async (
     return res.json(existingVendor);
   }
 
-  return res.json({ message: "Vendor information not found" });
+  return res.json({ message: 'Vendor information not found' });
 };
 
 export const UpdateVendorCoverImage = async (
@@ -85,13 +85,13 @@ export const UpdateVendorCoverImage = async (
     const user = req.user;
 
     if (!user) {
-      return res.status(401).json({ message: "Unauthorized user" });
+      return res.status(401).json({ message: 'Unauthorized user' });
     }
 
     const vendor = await FindVendor(user._id);
 
     if (!vendor) {
-      return res.status(404).json({ message: "Vendor not found" });
+      return res.status(404).json({ message: 'Vendor not found' });
     }
     const files = req.files as [Express.Multer.File];
     const images = files.map((file: Express.Multer.File) => file.filename);
@@ -102,10 +102,10 @@ export const UpdateVendorCoverImage = async (
     return res.json(result);
   } catch (error: any) {
     // Catch any unhandled errors and return a server error response
-    console.error("Error in AddFood:", error);
+    console.error('Error in AddFood:', error);
     return res
       .status(500)
-      .json({ message: "Internal server error", error: error.message });
+      .json({ message: 'Internal server error', error: error.message });
   }
 };
 
@@ -127,7 +127,7 @@ export const UpdateVendorService = async (
     return res.json(existingVendor);
   }
 
-  return res.json({ message: "Vendor information not found" });
+  return res.json({ message: 'Vendor information not found' });
 };
 
 export const AddFood = async (
@@ -139,7 +139,7 @@ export const AddFood = async (
     const user = req.user;
 
     if (!user) {
-      return res.status(401).json({ message: "Unauthorized user" });
+      return res.status(401).json({ message: 'Unauthorized user' });
     }
 
     const { name, description, category, foodType, readyTime, price } =
@@ -154,13 +154,13 @@ export const AddFood = async (
       !readyTime ||
       !price
     ) {
-      return res.status(400).json({ message: "Missing required fields" });
+      return res.status(400).json({ message: 'Missing required fields' });
     }
 
     const vendor = await FindVendor(user._id);
 
     if (!vendor) {
-      return res.status(404).json({ message: "Vendor not found" });
+      return res.status(404).json({ message: 'Vendor not found' });
     }
     const files = req.files as [Express.Multer.File];
     const images = files.map((file: Express.Multer.File) => file.filename);
@@ -181,19 +181,19 @@ export const AddFood = async (
       const result = await vendor.save();
 
       const populatedVendor = await Vendor.findById(vendor._id)
-        .populate("foods")
+        .populate('foods')
         .exec();
 
       return res.status(201).json(populatedVendor); // Return 201 for a successful creation
     } else {
-      return res.status(500).json({ error: "Invalid ObjectId" });
+      return res.status(500).json({ error: 'Invalid ObjectId' });
     }
   } catch (error: any) {
     // Catch any unhandled errors and return a server error response
-    console.error("Error in AddFood:", error);
+    console.error('Error in AddFood:', error);
     return res
       .status(500)
-      .json({ message: "Internal server error", error: error.message });
+      .json({ message: 'Internal server error', error: error.message });
   }
 };
 
@@ -206,22 +206,22 @@ export const GetFoods = async (
     const user = req.user;
 
     if (!user) {
-      return res.status(401).json({ message: "Unauthorized user" });
+      return res.status(401).json({ message: 'Unauthorized user' });
     }
 
-          const foods = await Food.find({ vendorId: user._id });
+    const foods = await Food.find({ vendorId: user._id });
 
     if (!foods || foods.length === 0) {
       return res
         .status(404)
-        .json({ message: "No foods found for this vendor" });
+        .json({ message: 'No foods found for this vendor' });
     }
 
     return res.status(200).json(foods); // Return 200 for successful retrieval
   } catch (error: any) {
-    console.error("Error in GetFoods:", error);
+    console.error('Error in GetFoods:', error);
     return res
       .status(500)
-      .json({ message: "Internal server error", error: error.message });
+      .json({ message: 'Internal server error', error: error.message });
   }
 };
