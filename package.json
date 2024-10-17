@@ -7,6 +7,9 @@
     "start": "node index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "lint-staged": {
+    "*.ts": "eslint --fix"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -30,5 +33,12 @@
     "nodemon": "^3.1.4",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.10.0",
+    "eslint": "^9.12.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10"
   }
 }

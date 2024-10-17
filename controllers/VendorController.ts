@@ -209,7 +209,7 @@ export const GetFoods = async (
       return res.status(401).json({ message: "Unauthorized user" });
     }
 
-    const foods = await Food.find({ vendorId: user._id });
+          const foods = await Food.find({ vendorId: user._id });
 
     if (!foods || foods.length === 0) {
       return res
