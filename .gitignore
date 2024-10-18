@@ -34,6 +34,7 @@ coverage/
 
 # dotenv environment variables file
 .env
+.env.local
 
 # Parcel-bundler cache (https://parceljs.org/)
 .cache
