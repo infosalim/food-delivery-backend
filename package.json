@@ -10,8 +10,7 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.ts": "eslint --fix",
-    "tests/**/*.test.ts": "jest --bail --findRelatedTests"
+    "*.ts": "eslint --fix"
   },
   "keywords": [],
   "author": "",
