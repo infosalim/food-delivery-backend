@@ -1,24 +1,18 @@
 import express from 'express';
-import { AdminRoute, VendorRoute } from './routes';
-import bodyParser from 'body-parser';
-import { dbConnection } from './db';
 import * as dotenv from 'dotenv';
-import path from 'path';
+import App from './services/ExpressApp';
+import dbConnection from './services/Database';
 
 dotenv.config();
 
-const app = express();
+const StartServer = async () => {
+  const app = express();
+  await dbConnection();
+  await App(app);
 
-// Database
-dbConnection();
+  app.listen(8000, () => {
+    console.log('App is listening on PORT: 8000');
+  });
+};
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/images', express.static(path.join(__dirname, 'images')));
-
-app.use('/admin', AdminRoute);
-app.use('/vendor', VendorRoute);
-
-app.listen(8000, () => {
-  console.log('App is running on Port: 8000');
-});
+StartServer();

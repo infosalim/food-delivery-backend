@@ -1,3 +1,2 @@
-export const MONGO_URI =
-  'mongodb+srv://salimh:mshossain@cluster0.xlvci9i.mongodb.net' as string;
-export const APP_SECRET = 'OUR_APP_Secret' as string;
+export const MONGO_URI = process.env.MONGO_URI as string;
+export const APP_SECRET = process.env.APP_SECRET as string;
