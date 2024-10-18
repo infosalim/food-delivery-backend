@@ -1,5 +1,5 @@
 import express, { Application } from 'express';
-import { AdminRoute, VendorRoute } from '../routes';
+import { AdminRoute, ShoppingRoute, VendorRoute } from '../routes';
 import bodyParser from 'body-parser';
 import path from 'path';
 
@@ -10,6 +10,7 @@ const App = async (app: Application) => {
 
   app.use('/admin', AdminRoute);
   app.use('/vendor', VendorRoute);
+  app.use(ShoppingRoute);
 
   return app;
 };
